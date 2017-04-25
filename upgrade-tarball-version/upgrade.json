@@ -1,0 +1,30 @@
+{
+    "upgrader_version": 0.1,
+    "upgrade_host": "",
+    "debug": {
+        "shell":  false,
+        "python": false
+    },
+    "timeout": 900,
+    "node_list": [ "" ],
+    "pre_check": {
+        "iso_version": "dev",
+        "cur_version": "0.0",
+        "upgrade_version": "0.1",
+        "rollback": false,
+        "service_off": false,
+        "service_off_confirmation": false
+    },
+    "snapshot": false,
+    "upgrade": {
+        "backup": true,
+        "package_list": [
+            {"package_name": "os-kernel", "pkg_service_off": true, "pkg_cur_ver": "4.8.0-ist05+", "pkg_upgrade_ver": "4.8.0-ist04+"},
+            {"package_name": "glusterfs", "pkg_service_off": true, "pkg_cur_ver": "3.9.1__3c01348", "pkg_upgrade_ver": "3.8.5__b592b47"}
+        ],
+        "reboot": true
+    },
+    "snapshot_check": false,
+    "post_check": true,
+    "clean": true
+}

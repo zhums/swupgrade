@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+set -x
+IFS='%'
+if [ "$1" == "help" ] || [ -z "$1" ]
+then
+	echo "Usage: ./depadd package.deb requirement1 requirement2 ... requirementN"
+	exit 0
+fi
+deb=$1
+name=$(echo $deb | cut -d'.' -f1)
+echo $deb $name
+dpkg-deb -x $deb $name
+dpkg-deb --control $deb ${name}/DEBIAN
+if grep -Fq "Depends:" ${name}/DEBIAN/control
+then
+	start=2
+else
+	echo "Depends: $2" >> ${name}/DEBIAN/control
+	start=3
+fi
+for i in ${@:${start}}
+do
+	echo $i
+	sed -i -E "s/(Depends:.*)/\1, $i/g" ${name}/DEBIAN/control
+done
+dpkg -b ${name} $deb
+rm -r ${name}
